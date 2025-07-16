@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Aniversário com Chuva de Palavras Para Aline</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #fff0f5;
+            overflow: hidden;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 24px;
+            user-select: none;
+            pointer-events: none;
+            animation: float 8s ease-out forwards;
+            opacity: 1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .word {
+            position: absolute;
+            /*font-size: 20px;*/
+            font-size: clamp(14px, 4vw, 20px);
+            color: #d63384;
+            opacity: 0.9;
+            user-select: none;
+            animation: fall linear forwards;
+            white-space: nowrap;
+
+            /*nova linha*/
+            max-width: 90vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+       /* @keyframes fall {
+            0% {
+                transform: translateY(-30px);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }*/
+        @keyframes fall {
+            0% {
+                transform: translateY(-30px) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+
+        .card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+            z-index: 10;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            width: 80%;
+            max-width: 350px;
+            box-sizing: border-box;
+        }
+
+        @media (hover: none) {
+            .card:hover {
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .card-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #c71585;
+            font-size: clamp(16px, 4vw, 20px);
+        }
+        /* alteração */
+        .card.animate {
+    animation: bounce 0.4s ease;
+}
+
+@keyframes bounce {
+    0%   { transform: translate(-50%, -50%) scale(1); }
+    50%  { transform: translate(-50%, -50%) scale(1.07) rotate(1deg); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="card" id="birthdayCard">
+    <div class="card-icon">💌</div>
+    <div class="message" id="mensagem">Clique na carta para ler 💖</div>
+</div>
+
+<script>
+    const simbolos = ["🌸", "💖", "🌸", "💖"];
+const palavrasDoces = [
+  "Seu sorriso ilumina tudo ✨", "Alegria", "Felicidade", "Esperança", 
+ "Você é Especial 💫",
+  "Cachos que dançam com o vento",
+  "Você é pura luz 🌟",
+  "Brilho no olhar e alma linda",
+  "Cachos que dançam com o vento",
+  "Deus te fez única",
+  "Você é importante",
+  "Seu sorriso ilumina tudo ✨",
+  "Feliz Aniversário", "Feliz aniversario",
+  "Deus te abençoe",
+  "Cachos que dançam com o vento",
+  "Você é importante",
+  "Alegria que contagia",
+  "Você é importante", "Você é importante",
+  "Você é um presente de Deus 🎁",
+  "Seu sorriso ilumina tudo ✨",
+  "Cachos que dançam com o vento",
+  "Você é importante",
+  "Você é Incrivel💫",
+  "Flor rara em um jardim especial",
+  "Você é Incrivel💫",
+  "Radiante como o sol",
+  "Você é a calmaria que encanta",
+  "Você é Incrivel💫",
+  "Promessa de dias bons",
+  "Encanto que não se explica",
+  "Você é Incrivel💫",
+  "Fé que move o coração"
+];
+
+    const mensagens = [
+        `Feliz aniversário Aline! Que o dia de hoje te lembre o quanto você é especial.
+        Cada detalhe seu — dos cachos até o jeito de sorrir — é um presente de Deus.
+        Nunca duvide disso. ✨`,
+        `Você é linda de um jeito que vai além do que se vê.
+        Seus cachos são únicos, seu sorriso é luz, e seus olhos têm uma paz que acalma.
+        Que Jesus continue te guardando e guiando com amor. 💫`,
+        `Você tem um sorriso que parece nascer do céu.
+        É impossível não sorrir junto.
+        Deus foi delicado quando moldou cada traço seu — e quando te deu esses olhos que brilham como promessa de dia bom. 🌤️`,
+        `Que o dia de hoje te lembre o quanto você é especial.
+        Cada detalhe seu — dos cachos até o jeito de sorrir — é um presente de Deus.
+        Nunca duvide disso. ✨`,
+        `Que você realize todos os seus sonhos.
+        E que, por onde passar, continue espalhando essa luz tão sua.
+        Você é uma dessas pessoas que Deus coloca no mundo com propósito:
+        Encantar, curar e fazer sorrir. ✨`,
+        `Você é mais do que bonita.
+        É incrível, gentil, iluminada por dentro.
+        Eu torço pela sua felicidade todos os dias — mesmo que você nem saiba disso. 🌻`,
+        `Que Deus cuide de você todos os dias com o mesmo carinho com que criou cada cachinho seu.
+        Porque Ele sabia que o mundo precisava de mais beleza, leveza e graça. 🌻`,
+        `Seus cachos são como você: livres, bonitos e cheios de vida.
+        E quando você sorri, parece que tudo à volta fica mais bonito também.
+        Que Deus realize cada um dos seus sonhos. 🎁`,
+        `Você é feita de detalhes que brilham.
+        E nenhum deles passa despercebido por quem tem olhos atentos e coração sincero.
+        Os seus cachos dançam, os olhos falam e o sorriso… ah, o sorriso é poesia pura. 🌸`,
+        `Te olhar é como ver flores desabrochando.
+        Você transmite leveza, verdade e paz.
+        E seu sorriso… é impossível não amar. 🌸`,
+        `Que os seus desejos virem realidade.
+        Que a sua fé continue firme.
+        E que o amor de Deus te acompanhe em cada passo — porque você merece tudo de mais lindo.`,
+        `Você é uma flor rara no jardim de Deus.
+        Linda, forte, cheia de cor, cheia de graça.
+        Que este novo ciclo venha cheio de bênçãos, amor e realizações. 🌸`,
+        `Você é resposta de oração de alguém.
+        É inspiração de outros.
+        E sem saber, faz os dias de quem te vê mais bonitos.
+        Inclusive os meus.`,
+        `Mesmo sem saber, você inspira.
+        Com seus olhos brilhantes, seus cachos soltos, sua essência leve.
+        Feliz aniversário, menina linda. Que a vida te abrace com tudo o que há de bom. 🎂`
+    ];
+    let indiceMsg = 0;
+    const birthdayCard = document.getElementById("birthdayCard");
+    let isTouch = false; // Flag para detectar se um toque ocorreu
+
+    /*function mostrarMensagem() {
+        const msgEl = document.getElementById("mensagem");
+        msgEl.textContent = mensagens[indiceMsg];
+        indiceMsg = (indiceMsg + 1) % mensagens.length;
+    }*//* alteração*/
+    function mostrarMensagem() {
+    const msgEl = document.getElementById("mensagem");
+    msgEl.textContent = mensagens[indiceMsg];
+
+    // Animação da carta
+    birthdayCard.classList.add("animate");
+    setTimeout(() => birthdayCard.classList.remove("animate"), 400);
+
+    indiceMsg = (indiceMsg + 1) % mensagens.length;
+}
+
+
+    // Evento para a carta: prioriza touchend para mobile, click para desktop
+    birthdayCard.addEventListener("touchend", function(e) {
+        e.preventDefault(); // Impede o comportamento padrão do toque (incluindo o clique)
+        isTouch = true; // Define a flag de toque
+        mostrarMensagem();
+    }, { passive: false });
+
+    birthdayCard.addEventListener("click", function(e) {
+        // Se um toque já ocorreu, não executa o clique (evita duplicação)
+        if (isTouch) {
+            isTouch = false; // Reseta a flag
+            return;
+        }
+        mostrarMensagem();
+    });
+
+
+    function criarParticulas(x, y) {
+        const quantidade = 20;
+
+        for (let i = 0; i < quantidade; i++) {
+            const particula = document.createElement("div");
+            particula.classList.add("particle");
+            particula.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+            particula.style.left = `${x}px`;
+            particula.style.top = `${y}px`;
+
+            const dx = `${(Math.random() * 2 - 1) * 50}vw`;
+            const dy = `${(Math.random() * 2 - 1) * 50}vh`;
+            particula.style.setProperty("--dx", dx);
+            particula.style.setProperty("--dy", dy);
+
+            document.body.appendChild(particula);
+
+            setTimeout(() => particula.remove(), 6000);
+        }
+    }
+
+    // Evento para criar partículas ao Clicar (desktop)
+    document.body.addEventListener("click", function (e) {
+        // Cria partículas APENAS se o clique NÃO for na carta
+        // E se não for um clique vindo de um toque
+        if (!e.target.closest(".card") && !isTouch) {
+            criarParticulas(e.clientX, e.clientY);
+        }
+    });
+
+    // Evento para criar partículas ao Tocar (mobile)
+    document.body.addEventListener("touchstart", function (e) {
+        // Cria partículas APENAS se o toque NÃO for na carta
+        if (!e.target.closest(".card")) {
+            e.preventDefault(); // Impede rolagem ou zoom indesejado ao tocar fora da carta
+            criarParticulas(e.touches[0].clientX, e.touches[0].clientY);
+            isTouch = true; // Define a flag de toque para evitar clique extra
+        }
+    }, { passive: false });
+
+    // Resetar isTouch após um curto período para permitir cliques normais
+    document.body.addEventListener("touchend", function() {
+        setTimeout(() => {
+            isTouch = false;
+        }, 300); // Um pequeno atraso para cobrir o "click delay" do navegador
+    });
+
+    function chuvaDePalavras() {
+        const palavra = document.createElement("div");
+        palavra.classList.add("word");
+        palavra.textContent = palavrasDoces[Math.floor(Math.random() * palavrasDoces.length)];
+        palavra.style.left = `${Math.random() * 100}vw`;
+        palavra.style.top = `-30px`;
+        //palavra.style.animationDuration = `${4 + Math.random() * 4}s`;
+        // nova linha
+        const duracao = (7 + Math.random() * 7).toFixed(2); // de 6 a 12 segundos
+        palavra.style.animationDuration = `${duracao}s`;
+
+        document.body.appendChild(palavra);
+
+        setTimeout(() => palavra.remove(), 8000);
+    }
+
+    setInterval(chuvaDePalavras, 500);
+    
+</script>
+
+</body>
+</html>
